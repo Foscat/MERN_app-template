@@ -1,0 +1,31 @@
+{
+  "name": "mern_app-template",
+  "version": "1.0.0",
+  "description": "MERN app template",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Foscat/MERN_app-template.git"
+  },
+  "author": "Foscat",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.7"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.3",
+    "mongoose": "^5.3.16",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.5"
+  },
+  "bugs": {
+    "url": "https://github.com/Foscat/MERN_app-template/issues"
+  },
+  "homepage": "https://github.com/Foscat/MERN_app-template#readme"
+}
