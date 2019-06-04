@@ -3,7 +3,7 @@ import { Jumbotron } from "reactstrap";
 const FlexTron = (props) => {
     return (
         <div>
-            <Jumbotron className="FlexTron" style={props.style}>
+            <Jumbotron className="jumbotron FlexTron" style={props.style}>
 
                 <div className="insideTron">
                     <h1 className="jumboTitle">{props.title}</h1>

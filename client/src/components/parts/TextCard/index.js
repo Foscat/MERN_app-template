@@ -4,21 +4,21 @@ import { Card, CardBody, CardHeader, CardTitle, CardSubtitle } from 'reactstrap'
 const TextCard = (props) => {
     return(
         <div>
-            <Card style={props.style}>
+            <Card className="card" style={props.style}>
           
-                <CardHeader>
+                <CardHeader className="card-head">
 
                     <CardTitle>
-                        <h2 className="txtCardTitle">{props.title}</h2>
+                        <h2 className="card-title txtCardTitle">{props.title}</h2>
                     </CardTitle>
 
                     <CardSubtitle>
-                        <h4 className="txtCardSub">{props.subtitle}</h4>
+                        <h4 className="card-subtitle txtCardSub">{props.subtitle}</h4>
                     </CardSubtitle>
 
                 </CardHeader>
 
-                <CardBody>
+                <CardBody className="card-body">
 
                     <div className="txtCardChildren">
                         {props.children}
