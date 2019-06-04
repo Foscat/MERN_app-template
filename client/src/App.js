@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {  BrowserRouter as Router, Route, Switch  } from 'react-router-dom';
+import Home from "./components/pages/Home"
 import NoMatch from './components/pages/NoMatch';
-import "./general.css";
 
 class App extends Component {
     render() {

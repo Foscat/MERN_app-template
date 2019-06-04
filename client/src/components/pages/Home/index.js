@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
 import API from '../../../utils/API';
+import TextCard from '../../parts/TextCard';
 
 class Home extends Component{
     constructor(props){
@@ -21,7 +22,10 @@ class Home extends Component{
     render() {
         return (
             <div>
-                <h1>This is the Home page.</h1>
+                <TextCard 
+                    title="Basic component"
+                    subtitle="Heyy"
+                />
             </div>
         );
     }
