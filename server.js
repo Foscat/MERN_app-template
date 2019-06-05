@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3001;
 // Use express
 app.use(express.urlencoded({ extended:true }));
 app.use(express.json());
+
 // // Have express use static assets
 if(process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
@@ -23,6 +24,7 @@ app.use(function(req, res, next) {
 });
 
 // Connect to MongoDB
+// To make custom data base just put the name you want for the db where 'mern_template' is.
 mongoose.connect(
     process.env.MONGODB_URI || "mongodb://localhost/mern_template",
     {

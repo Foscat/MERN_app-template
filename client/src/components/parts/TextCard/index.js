@@ -1,6 +1,9 @@
 import React from 'react';
 import { Card, CardBody, CardHeader, CardTitle, CardSubtitle } from 'reactstrap';
 
+// General use card for wrapping around other components and give clean presentaiton
+// Takes is style props to give ease of css 
+
 const TextCard = (props) => {
     return(
         <div>

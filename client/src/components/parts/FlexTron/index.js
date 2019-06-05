@@ -1,5 +1,8 @@
 import React from 'react';
 import { Jumbotron } from "reactstrap";
+
+// Simple jumborton that can take in prop styles and has classNames for easy css
+
 const FlexTron = (props) => {
     return (
         <div>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
+// Seperate form for easy changing of form aspects or can be replaced with preferred form component
+
 const CustomerSignUpForm = (props) => {
     return(
         <div>

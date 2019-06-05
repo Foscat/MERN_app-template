@@ -4,6 +4,10 @@ import TextCard from "../TextCard";
 import { Row, Container } from 'reactstrap';
 import CustomerSignUpForm from './CustomerSignUpForm';
 
+// Basic signup component that holds its specific form inside it
+// Gives simple interface for adding users to db
+// Rinse and repeat for new tables in db.
+
 const CustomerSignUp = (props) => {
     
     return(

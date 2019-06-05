@@ -8,16 +8,24 @@ import SweetAlert from "react-bootstrap-sweetalert";
 export class Home extends Component{
     constructor(props){
         super(props);
+
+        // These are base state aspects That makes this page work
         this.state = {
+
             userPool: [],
+            // Add user form
             addCustName1: "",
             addCustName2: "",
             addCustEmail: "",
             addCustPass: "",
             addCustPhone: 0,
+
+            // Model attrs
             show: false,
             title: "Sweetie",
             text: null,
+
+            // Update user info form
             updateFirstName: "",
             updateLastName: "",
             updateEmail: "",
@@ -37,7 +45,8 @@ export class Home extends Component{
         console.log("Updated State: ", this.state);
     }
 
-    // General handler for inputs thats value is to change the state on the DOM
+    // General handler for inputs thats value is to change the state
+    // If state does not exsist it makes a state field with its name
     handleInputChange = event => {
         const { name, value } = event.target;
         this.setState({
@@ -98,34 +107,34 @@ export class Home extends Component{
                     <FormGroup className="form-group">
                         <Label for="updateFirstName">First Name</Label>
                         <Input type="text" name="updateFirstName" onChange={this.handleInputChange}
-                        id="updateFirstName" value={this.state.updateFirstName}/>
+                        id="updateFirstName" placeholder={user.first_name}/>
                     </FormGroup>
 
                     <FormGroup className="form-group">
                         <Label for="updateLastName">Last Name</Label>
                         <Input type="text" name="updateLastName" onChange={this.handleInputChange}
-                        id="updateLastName" value={this.state.updateLastName}/>
+                        id="updateLastName" placeholder={user.last_name}/>
                     </FormGroup>
 
                     <FormGroup className="form-group">
                         <Label for="updateEmail">Preferred Email</Label>
                         <Input type="email" name="updateEmail" onChange={this.handleInputChange}
-                        id="updateEmail" value={this.state.updateEmail}/>
+                        id="updateEmail" placeholder={user.email}/>
                     </FormGroup>
 
                     <FormGroup className="form-group">
                         <Label for="updatePassword">Password</Label>
                         <Input type="password" name="updatePassword" onChange={this.handleInputChange}
-                        id="updatePassword" value={this.state.updatePassword}/>
+                        id="updatePassword" placeholder={user.password}/>
                     </FormGroup>
 
                     <FormGroup className="form-group">
                         <Label for="updatePhoneNum">Phone Number</Label>
                         <Input type="number" name="updatePhoneNum" onChange={this.handleInputChange}
-                        id="updatePhoneNum" value={this.state.updatePhoneNum}/>
+                        id="updatePhoneNum" placeholder={user.phone_num}/>
                     </FormGroup>
 
-                    <Button className="btn btn-success" onClick={() => this.readyState().then(this.handleUpdateFormSubmit(user._id)) }>Submit</Button>
+                    <Button className="btn btn-success" onClick={() => this.handleUpdateFormSubmit(user._id) }>Submit</Button>
             </form>
           </div>
         )
@@ -161,6 +170,7 @@ export class Home extends Component{
             password: this.state.updatePassword,
             phone_num: this.state.updatePhoneNum
         })
+        .then(() => this.getUsers())
     }
 
     render() {
