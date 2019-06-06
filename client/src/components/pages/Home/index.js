@@ -107,31 +107,31 @@ export class Home extends Component{
                     <FormGroup className="form-group">
                         <Label for="updateFirstName">First Name</Label>
                         <Input type="text" name="updateFirstName" onChange={this.handleInputChange}
-                        id="updateFirstName" placeholder={user.first_name}/>
+                        id="updateFirstName" defaultValue={user.first_name} placeholder="Enter first name"/>
                     </FormGroup>
 
                     <FormGroup className="form-group">
                         <Label for="updateLastName">Last Name</Label>
                         <Input type="text" name="updateLastName" onChange={this.handleInputChange}
-                        id="updateLastName" placeholder={user.last_name}/>
+                        id="updateLastName" defaultValue={user.last_name} placeholder="Enter last name"/>
                     </FormGroup>
 
                     <FormGroup className="form-group">
                         <Label for="updateEmail">Preferred Email</Label>
                         <Input type="email" name="updateEmail" onChange={this.handleInputChange}
-                        id="updateEmail" placeholder={user.email}/>
+                        id="updateEmail" defaultValue={user.email} placeholder="Enter email"/>
                     </FormGroup>
 
                     <FormGroup className="form-group">
                         <Label for="updatePassword">Password</Label>
                         <Input type="password" name="updatePassword" onChange={this.handleInputChange}
-                        id="updatePassword" placeholder={user.password}/>
+                        id="updatePassword" defaultValue={user.password} placeholder="Enter password"/>
                     </FormGroup>
 
                     <FormGroup className="form-group">
                         <Label for="updatePhoneNum">Phone Number</Label>
                         <Input type="number" name="updatePhoneNum" onChange={this.handleInputChange}
-                        id="updatePhoneNum" placeholder={user.phone_num}/>
+                        id="updatePhoneNum" defaultValue={user.phone_num} placeholder="Enter phone number"/>
                     </FormGroup>
 
                     <Button className="btn btn-success" onClick={() => this.handleUpdateFormSubmit(user._id) }>Submit</Button>
