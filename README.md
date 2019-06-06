@@ -20,20 +20,20 @@ Once dependecies are installed type *npm start* in termial. This will start the 
 ### Dependencies 
 
 * Back End
-⋅⋅⋅ Concurrently - Allows package JSON scripts to candle multiple commands
-⋅⋅⋅ Nodemon - For when you are in development any save will refresh server to give live update of changes
-⋅⋅⋅ Axios - For communicating with front end
-⋅⋅⋅ Express - For helping build a server and serving assests
-⋅⋅⋅ Mongoose - Helps with orm for mongodb
-⋅⋅⋅ Prop-types - Helps react with hanldeing props
-⋅⋅⋅ React - To let app work in a react environment
+- Concurrently - Allows package JSON scripts to candle multiple commands
+- Nodemon - For when you are in development any save will refresh server to give live update of changes
+- Axios - For communicating with front end
+- Express - For helping build a server and serving assests
+- Mongoose - Helps with orm for mongodb
+- Prop-types - Helps react with hanldeing props
+- React - To let app work in a react environment
 
 * Front End
-⋅⋅⋅ Axios - For communicating with back end routes
-⋅⋅⋅ React - To let app work in a react environment
-⋅⋅⋅ React-bootstrap-sweetalert - For easy to use models
-⋅⋅⋅ React-dom - Needed for react to work with DOM
-⋅⋅⋅ React-router-dom - Needed for using a react component router
-⋅⋅⋅ React-scripts - Needed for react to work
-⋅⋅⋅ Reactstrap - Special components made just for react
+- Axios - For communicating with back end routes
+- React - To let app work in a react environment
+- React-bootstrap-sweetalert - For easy to use models
+- React-dom - Needed for react to work with DOM
+- React-router-dom - Needed for using a react component router
+- React-scripts - Needed for react to work
+- Reactstrap - Special components made just for react
 
