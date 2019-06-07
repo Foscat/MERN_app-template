@@ -9,10 +9,12 @@ export class Home extends Component{
     constructor(props){
         super(props);
 
-        // These are base state aspects That makes this page work
+        // These are base state aspects that makes this page work
         this.state = {
 
+            // User api data pool
             userPool: [],
+
             // Add user form
             addCustName1: "",
             addCustName2: "",
@@ -37,10 +39,12 @@ export class Home extends Component{
         }
     }
 
+    // When page loads see inital state value
     componentDidMount(){
-        console.log("Mount State: " , this.state)
+        console.log("Mount State: " , this.state);
     }
 
+    // Every time state changes this function fires to give you a update all changes and thier values
     componentDidUpdate(){
         console.log("Updated State: ", this.state);
     }
@@ -54,11 +58,12 @@ export class Home extends Component{
         });
     }
 
-    // function that handles adding a customer to the db
+    // Function that handles adding a customer to the db
     signUpUser = async () => {
         console.log("Add user state: ", this.state);
         const s = this.state;
 
+        // Sends info of to util api call
         API.addUser({
             first_name: s.addCustName1,
             last_name: s.addCustName2,
@@ -73,7 +78,7 @@ export class Home extends Component{
     getUsers= async () => {
         console.log("Get users: ", this.state);
         // When users are pulled from the db the are put into an array. That array when it contains info loops and makes cards for each user
-        API.getUsers().then(res => this.setState({ userPool: res.data  }))
+        API.getUsers().then(res => this.setState({ userPool: res.data }))
         .catch(() => {
             this.setState({ 
                 userPool: ["Didn't work"]
@@ -81,15 +86,16 @@ export class Home extends Component{
         })
     }
 
-    // Function that handles the deleting of a single item from the db
-    // tied to a button that is rendered with each item in inventory table
+    // Function that handles the deleting of a single user from the db
+    // This will be tied to a button that is tied to a specific user
     deleteUser = id => {
         console.log("Delete function started");
         alert("You are deleting someting from the db!");
+        // Send request to util api call
         API.deleteUser(id).then(res => this.getUsers()).then(() => this.getUsers())
     }
 
-
+    // Sweet alert model that contains form for PUT operations 
     contactModal = user => {
         
         let text = (
@@ -98,46 +104,48 @@ export class Home extends Component{
             <br />
             <form
               className="m-2"
-              action="#" //This is where my update function call should go. In theroy 
+              action="#" //This does not need a action since submit function handles info flow
               encType="text/plain"
               method="put"
               id="update-form"
             >
 
-                    <FormGroup className="form-group">
-                        <Label for="updateFirstName">First Name</Label>
-                        <Input type="text" name="updateFirstName" onChange={this.handleInputChange}
-                        id="updateFirstName" defaultValue={user.first_name} placeholder="Enter first name"/>
-                    </FormGroup>
+                <FormGroup className="form-group">
+                    <Label for="updateFirstName">First Name</Label>
+                    <Input type="text" name="updateFirstName" onChange={this.handleInputChange}
+                    id="updateFirstName" defaultValue={user.first_name} placeholder="Enter first name"/>
+                </FormGroup>
 
-                    <FormGroup className="form-group">
-                        <Label for="updateLastName">Last Name</Label>
-                        <Input type="text" name="updateLastName" onChange={this.handleInputChange}
-                        id="updateLastName" defaultValue={user.last_name} placeholder="Enter last name"/>
-                    </FormGroup>
+                <FormGroup className="form-group">
+                    <Label for="updateLastName">Last Name</Label>
+                    <Input type="text" name="updateLastName" onChange={this.handleInputChange}
+                    id="updateLastName" defaultValue={user.last_name} placeholder="Enter last name"/>
+                </FormGroup>
 
-                    <FormGroup className="form-group">
-                        <Label for="updateEmail">Preferred Email</Label>
-                        <Input type="email" name="updateEmail" onChange={this.handleInputChange}
-                        id="updateEmail" defaultValue={user.email} placeholder="Enter email"/>
-                    </FormGroup>
+                <FormGroup className="form-group">
+                    <Label for="updateEmail">Preferred Email</Label>
+                    <Input type="email" name="updateEmail" onChange={this.handleInputChange}
+                    id="updateEmail" defaultValue={user.email} placeholder="Enter email"/>
+                </FormGroup>
 
-                    <FormGroup className="form-group">
-                        <Label for="updatePassword">Password</Label>
-                        <Input type="password" name="updatePassword" onChange={this.handleInputChange}
-                        id="updatePassword" defaultValue={user.password} placeholder="Enter password"/>
-                    </FormGroup>
+                <FormGroup className="form-group">
+                    <Label for="updatePassword">Password</Label>
+                    <Input type="password" name="updatePassword" onChange={this.handleInputChange}
+                    id="updatePassword" defaultValue={user.password} placeholder="Enter password"/>
+                </FormGroup>
 
-                    <FormGroup className="form-group">
-                        <Label for="updatePhoneNum">Phone Number</Label>
-                        <Input type="number" name="updatePhoneNum" onChange={this.handleInputChange}
-                        id="updatePhoneNum" defaultValue={user.phone_num} placeholder="Enter phone number"/>
-                    </FormGroup>
+                <FormGroup className="form-group">
+                    <Label for="updatePhoneNum">Phone Number</Label>
+                    <Input type="number" name="updatePhoneNum" onChange={this.handleInputChange}
+                    id="updatePhoneNum" defaultValue={user.phone_num} placeholder="Enter phone number"/>
+                </FormGroup>
 
-                    <Button className="btn btn-success" onClick={() => this.handleUpdateFormSubmit(user._id) }>Submit</Button>
+                <Button className="btn btn-success" onClick={() => this.handleUpdateFormSubmit(user._id) }>Submit</Button>
+
             </form>
           </div>
         )
+        // Update state to show model
         this.setState({
           title: `${user.first_name} ${user.last_name}`,
           text: text,
@@ -145,8 +153,9 @@ export class Home extends Component{
         })
     }
 
+    // When the update form on the model is submitted this function fires
     handleUpdateFormSubmit = (id) => {
-        //data validation
+        // If one of the form fields has no value block submit
         if (
           !this.state.updateFirstName ||
           !this.state.updateLastName ||
@@ -154,7 +163,7 @@ export class Home extends Component{
           !this.state.updatePassword ||
           !this.state.updatePhoneNum
         ) {
-          //if failed show alert
+          // If failed block submit and show alert
           this.setState({
             title: "Error",
             text: "Please fill out all fields before submitting your survey",
@@ -162,7 +171,7 @@ export class Home extends Component{
           });
           return;
         }
-
+        // Send field info to db using utils api call
         API.updateUser(id, {
             first_name: this.state.updateFirstName,
             last_name: this.state.updateLastName,
@@ -170,6 +179,7 @@ export class Home extends Component{
             password: this.state.updatePassword,
             phone_num: this.state.updatePhoneNum
         })
+        // After form submits call function to get all users to see updated info
         .then(() => this.getUsers())
     }
 
@@ -179,16 +189,17 @@ export class Home extends Component{
             <div>
                 <Container className="container">
 
-                <SweetAlert
-                    show={this.state.show}
-                    title={this.state.title}
-                    onConfirm={() => this.setState({ show: false })}
-                    style={{ minWidth: "35%" }}
-                >
-                    <div style={{ maxHeight: "50vh", minWidth: "35%", overflow: "auto" }}>
-                        {this.state.text}
-                    </div>
-                </SweetAlert>
+                    {/* Generic model waiting for function to show and fill it */}
+                    <SweetAlert
+                        show={this.state.show}
+                        title={this.state.title}
+                        onConfirm={() => this.setState({ show: false })}
+                        style={{ minWidth: "35%" }}
+                    >
+                        <div style={{ maxHeight: "50vh", minWidth: "35%", overflow: "auto" }}>
+                            {this.state.text}
+                        </div>
+                    </SweetAlert>
 
                     <Row className="row">
 
@@ -200,6 +211,8 @@ export class Home extends Component{
                                     <Button className="btn btn-info" onClick={() => this.getUsers()}>
                                         Get all users in DB
                                     </Button>
+                                    {/* Sign up component holds the actual form inside of another component files kept nested to 
+                                     help with organization  */}
                                     <CustomerSignUp 
                                         handleInputChange={this.handleInputChange}
                                         handleFormSubmit={this.signUpUser}
@@ -209,7 +222,7 @@ export class Home extends Component{
                         </Col>
                         
 
-                        {/* See users in db */}
+                        {/* See all users in db */}
                         <Col className="col">
                             {this.state.userPool.length ? (
                                 <div className="bg-info">
@@ -220,6 +233,7 @@ export class Home extends Component{
                                             title={user.first_name}
                                             subtitle={user.last_name}
                                             >
+                                                {/* Show other user information as children */}
                                                 <p>Phone number: {user.phone_num}</p>
                                                 <p>Email: {user.email}</p>
                                                 <p>Password: {user.password}</p>
@@ -227,11 +241,15 @@ export class Home extends Component{
                                                 <Button type="button" className="btn btn-danger" onClick={() => this.deleteUser(user._id)}>
                                                     Delete
                                                 </Button>
-                                                <Button onClick={() =>  this.contactModal(user)}>Edit</Button>
+                                                {/* Edit user button */}
+                                                <Button onClick={() =>  this.contactModal(user)}>
+                                                    Edit
+                                                </Button>
                                             </TextCard>
                                         )
                                     })}
                                 </div>
+                                // If nothing is in array display this text
                             ) : (<p>Nothing Here</p>)}
                         </Col>
 

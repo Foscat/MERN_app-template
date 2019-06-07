@@ -5,7 +5,8 @@ Boilerplate for full MERN stack apps
 Full stack ready for deployment with built in CRUD functions and components.
 Made so the file structure is easy to follow and replicate to keep order as app increases in size.
 Comes with basic dependencies so developers can choose to add redux or other depencies on top off it. But allows for devs to have more choce on how app is built.
-**__ Site is deployment ready out of the box __**
+
+**__Site is deployment ready out of the box__**
 
 ## How to use it
 Clone repo as local file refrence then copy files into your project. Then on server.js level open terminal and type *npm install* this will install backend dependencies and then it auto switches to client side and installs dependencies.
@@ -22,7 +23,7 @@ Once dependencies are installed type *npm start* in termial. This will start the
 
 ### Dependencies 
 
-* Back End
+**Back End**
 - Concurrently - Allows package JSON scripts to candle multiple commands
 - Nodemon - For when you are in development any save will refresh server to give live update of changes
 - Axios - For communicating with front end
@@ -32,7 +33,7 @@ Once dependencies are installed type *npm start* in termial. This will start the
 - React - To let app work in a react environment
 - If-env - Allows app to use env files
 
-* Front End
+**Front End**
 - Axios - For communicating with back end routes
 - React - To let app work in a react environment
 - React-bootstrap-sweetalert - For easy to use models

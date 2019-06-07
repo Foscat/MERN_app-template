@@ -23,12 +23,6 @@ const CustomerSignUp = (props) => {
                      subtitle="Become a member of the db!"
                     >
                      <p>Fill out form to add to user table</p>
-                     <ul>
-                        <li>This is a working form for testing db connection</li>
-                        <li>To add new tables use biolderplate controllers, and routes.</li>
-                        <li>Communicate with these routes with functions in utils folder.</li>
-                        <li>Use these as boilerplate for new functions</li>
-                     </ul>
                     </Flextron>
 
                     <TextCard 

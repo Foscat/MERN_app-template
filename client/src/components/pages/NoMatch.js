@@ -2,6 +2,7 @@ import React from "react";
 import { Col, Row, Container } from "reactstrap";
 import FlexTron from "../parts/FlexTron";
 
+// If a url route goes wrong this page is displayed 
 function NoMatch() {
   return (
     <Container fluid>
