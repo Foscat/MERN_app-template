@@ -97,6 +97,14 @@ export class Home extends Component{
 
     // Sweet alert model that contains form for PUT operations 
     contactModal = user => {
+
+        this.setState({ 
+            updateFirstName: user.first_name,
+            updateLastName: user.last_name,
+            updateEmail: user.email,
+            updatePassword: user.password,
+            updatePhoneNum: user.phone_num
+        });
         
         let text = (
           <div>
@@ -179,8 +187,11 @@ export class Home extends Component{
             password: this.state.updatePassword,
             phone_num: this.state.updatePhoneNum
         })
-        // After form submits call function to get all users to see updated info
-        .then(() => this.getUsers())
+        // After form submits call function to get all users to see updated info and close model
+        .then(() => {
+            this.getUsers();
+            this.setState({ show : false});
+        })
     }
 
     render() {
