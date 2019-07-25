@@ -3,8 +3,9 @@ import { Container, Row, Col, Button  } from 'reactstrap';
 import API from '../../../utils/API';
 import TextCard from '../../parts/TextCard';
 import CustomerSignUp from '../../parts/CustomerSignUp';
-import SweetAlert from "react-bootstrap-sweetalert";
+import SweetAlert from 'react-bootstrap-sweetalert';
 import EditUser from '../../parts/Models/EditUser';
+import NavBar from '../../parts/NavBar';
 
 export class Home extends Component{
     constructor(props){
@@ -161,6 +162,9 @@ export class Home extends Component{
         
         return (
             <div>
+                
+                <NavBar />
+
                 <Container className="container">
 
                     {/* Generic model waiting for function to show and fill it */}
