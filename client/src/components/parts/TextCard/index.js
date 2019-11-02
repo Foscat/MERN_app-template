@@ -6,31 +6,29 @@ import { Card, CardBody, CardHeader, CardTitle, CardSubtitle } from 'reactstrap'
 
 const TextCard = (props) => {
     return(
-        <div>
-            <Card className="card" style={props.style}>
-          
-                <CardHeader className="card-head">
-
-                    <CardTitle>
-                        <h2 className="card-title txtCardTitle">{props.title}</h2>
-                    </CardTitle>
-
-                    <CardSubtitle>
-                        <h4 className="card-subtitle txtCardSub">{props.subtitle}</h4>
-                    </CardSubtitle>
-
-                </CardHeader>
-
-                <CardBody className="card-body">
-
-                    <div className="txtCardChildren">
-                        {props.children}
-                    </div>
+        <Card className={props.className} style={props.style}>
         
-                </CardBody>
+            <CardHeader>
 
-            </Card>
-        </div>
+                <CardTitle>
+                    <h2>{props.title}</h2>
+                </CardTitle>
+
+                <CardSubtitle>
+                    <h4>{props.subtitle}</h4>
+                </CardSubtitle>
+
+            </CardHeader>
+
+            <CardBody>
+
+                <div className="txtCardChildren">
+                    {props.children}
+                </div>
+    
+            </CardBody>
+
+        </Card>
     )
 }
 

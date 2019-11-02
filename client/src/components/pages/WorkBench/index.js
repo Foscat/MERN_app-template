@@ -1,39 +1,65 @@
 import React, { Component } from 'react';
-import TextCard from '../../parts/TextCard';
-
-    // Comment out to prevent warnings when needed they are here for easy access 
+  // Comment out to prevent warnings when needed they are here for easy access 
 // import { Container, Row, Col, Button  } from 'reactstrap';
+import TextCard from '../../parts/TextCard';
 // import API from '../../../utils/API';
 // import SweetAlert from 'react-bootstrap-sweetalert';
 
+
+
+/* What I am building today: 
+  -
+*/
+
 class WorkBench extends Component {
 
-    constructor(props){
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state={
+    this.state={
 
-        }
     }
+  }
 
-    componentDidMount(){
-        console.log(this.state);
-    }
+  componentDidMount(){
+    console.log("Mount state:", this.state);
+  }
 
-    render() {
-        return (
-            <div>
-                <TextCard
-                    title="My workbench"
-                    subtitle="Build new Page and Part Components here away from rest of app"
-                >
-                    To keep code clean build and refine code here. When done developing the code can be ready to be put into its 
-                    own component by being cropped from here.
-                    
-                </TextCard>
-            </div>
-        );
-    }
+  componentDidUpdate(){
+    console.log("Update state:", this.state);
+  }
+
+  // General handler for inputs thats value is to change the state
+  // If state does not exsist it makes a state field with its name
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  }
+
+  render() {
+    return (
+      <div style={styles.box} className="row pt-5">
+        <TextCard 
+          className="mx-auto"
+          title="Welcome to your workbench"
+          subtitle="Use this to build components away from rest of app"
+        >
+          <h3 className="text-center">{this.state.input}</h3>
+          <input className="form-control" name="input" type="text" onChange={this.handleInputChange}></input>
+        </TextCard>
+        
+      </div>
+    );
+  }
+
+}
+
+const styles = {
+  box: {
+    backgroundColor: "#efee"
+  }
 }
 
 export default WorkBench;

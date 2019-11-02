@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Button  } from 'reactstrap';
+import { Row, Col, Button  } from 'reactstrap';
 import API from '../../../utils/API';
 import TextCard from '../../parts/TextCard';
 import CustomerSignUp from '../../parts/CustomerSignUp';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import EditUser from '../../parts/Models/EditUser';
-import NavBar from '../../parts/NavBar';
 
-export class Home extends Component{
+class Home extends Component{
     constructor(props){
         super(props);
 
@@ -73,6 +72,7 @@ export class Home extends Component{
             password: s.addCustPass,
             phone_num: s.addCustPhone
         })
+        .catch(err=>console.error("You hit an error: ",err))
         .then(() => this.getUsers())
     };
 
@@ -127,13 +127,14 @@ export class Home extends Component{
 
     // When the update form on the model is submitted this function fires
     handleUpdateFormSubmit = (id) => {
+        let s = this.state
         // If one of the form fields has no value block submit
         if (
-          !this.state.updateFirstName ||
-          !this.state.updateLastName ||
-          !this.state.updateEmail ||
-          !this.state.updatePassword ||
-          !this.state.updatePhoneNum
+          !s.updateFirstName ||
+          !s.updateLastName ||
+          !s.updateEmail ||
+          !s.updatePassword ||
+          !s.updatePhoneNum
         ) {
           // If failed block submit and show alert
           this.setState({
@@ -145,11 +146,11 @@ export class Home extends Component{
         }
         // Send field info to db using utils api call
         API.updateUser(id, {
-            first_name: this.state.updateFirstName,
-            last_name: this.state.updateLastName,
-            email: this.state.updateEmail,
-            password: this.state.updatePassword,
-            phone_num: this.state.updatePhoneNum
+            first_name: s.updateFirstName,
+            last_name: s.updateLastName,
+            email: s.updateEmail,
+            password: s.updatePassword,
+            phone_num: s.updatePhoneNum
         })
         // After form submits call function to get all users to see updated info and close model
         .then(() => {
@@ -161,86 +162,87 @@ export class Home extends Component{
     render() {
         
         return (
-            <div>
+            <div className="pt-4">
+
+
+                {/* Generic model waiting for function to show and fill it */}
+                <SweetAlert
+                    show={this.state.show}
+                    title={this.state.title}
+                    onConfirm={() => this.setState({ show: false })}
+                    style={{ minWidth: "35%" }}
+                >
+                    <div style={styles.sweetBox}>
+                        {this.state.text}
+                    </div>
+                </SweetAlert>
+
+                <Row>
+
+                    {/* Add user form */}
+                    <Col lg="6" className="mx-auto">
+                        <TextCard 
+                            title="Basic component"
+                            subtitle="DB test form">
+                                <Button color="info" onClick={() => this.getUsers()}>
+                                    Get all users in DB
+                                </Button>
+                                {/* Sign up component holds the actual form inside of another component files kept nested to 
+                                    help with organization  */}
+                                <CustomerSignUp 
+                                    handleInputChange={this.handleInputChange}
+                                    handleFormSubmit={this.signUpUser}
+                                />
+                        </TextCard>
+
+                    </Col>
+                    
+
+                    {/* See all users in db */}
+                    <Col lg="5" className="mx-auto">
+                        {this.state.userPool.length ? (
+                            <div>
+                                {this.state.userPool.map((user) => {
+                                    return(
+                                        <TextCard
+                                        key={user._id}
+                                        title={user.first_name}
+                                        subtitle={user.last_name}
+                                        >
+                                            {/* Show other user information as children */}
+                                            <p>Phone number: {user.phone_num}</p>
+                                            <p>Email: {user.email}</p>
+                                            <p>Password: {user.password}</p>
+                                            {/* Delete this user button */}
+                                            <Button color="danger" onClick={() => this.deleteUser(user._id)}>
+                                                Delete
+                                            </Button>
+                                            {/* Edit user button */}
+                                            <Button color="info" onClick={() =>  this.editUserModal(user)}>
+                                                Edit
+                                            </Button>
+                                        </TextCard>
+                                    )
+                                })}
+                            </div>
+                            // If nothing is in array display empty p tag
+                        ) : (<p></p>)}
+                    </Col>
+
+                </Row>
                 
-                <NavBar />
-
-                <Container className="container">
-
-                    {/* Generic model waiting for function to show and fill it */}
-                    <SweetAlert
-                        show={this.state.show}
-                        title={this.state.title}
-                        onConfirm={() => this.setState({ show: false })}
-                        style={{ minWidth: "35%" }}
-                    >
-                        <div style={{ maxHeight: "50vh", minWidth: "35%", overflow: "auto" }}>
-                            {this.state.text}
-                        </div>
-                    </SweetAlert>
-
-                    <Row className="row">
-
-                        {/* Add user form */}
-                        <Col className="col">
-                            <TextCard 
-                                title="Basic component"
-                                subtitle="DB test form">
-                                    <Button className="btn btn-info" onClick={() => this.getUsers()}>
-                                        Get all users in DB
-                                    </Button>
-                                    {/* Sign up component holds the actual form inside of another component files kept nested to 
-                                     help with organization  */}
-                                    <CustomerSignUp 
-                                        handleInputChange={this.handleInputChange}
-                                        handleFormSubmit={this.signUpUser}
-                                    />
-                            </TextCard>
-
-                        </Col>
-                        
-
-                        {/* See all users in db */}
-                        <Col className="col">
-                            {this.state.userPool.length ? (
-                                <div className="bg-info">
-                                    {this.state.userPool.map((user) => {
-                                        return(
-                                            <TextCard
-                                            key={user._id}
-                                            title={user.first_name}
-                                            subtitle={user.last_name}
-                                            >
-                                                {/* Show other user information as children */}
-                                                <p>Phone number: {user.phone_num}</p>
-                                                <p>Email: {user.email}</p>
-                                                <p>Password: {user.password}</p>
-                                                {/* Delete this user button */}
-                                                <Button type="button" className="btn btn-danger" onClick={() => this.deleteUser(user._id)}>
-                                                    Delete
-                                                </Button>
-                                                {/* Edit user button */}
-                                                <Button onClick={() =>  this.editUserModal(user)}>
-                                                    Edit
-                                                </Button>
-                                            </TextCard>
-                                        )
-                                    })}
-                                </div>
-                                // If nothing is in array display this text
-                            ) : (<p>Nothing Here</p>)}
-                        </Col>
-
-                    </Row>
-
-                </Container>
-                
-
                 
             </div>
         );
     }
 }
 
+const styles = {
+    sweetBox:{ 
+        maxHeight: "50vh", 
+        minWidth: "35%", 
+        overflow: "auto" 
+    }
+}
 
 export default Home;

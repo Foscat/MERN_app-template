@@ -31,7 +31,8 @@ Once dependencies are installed type *npm start* in termial. This will start the
 - Mongoose - Helps with orm for mongodb
 - Prop-types - Helps react with hanldeing props
 - React - To let app work in a react environment
-- If-env - Allows app to use env files
+- If-env - Has app check for env
+- dotenv - Allows .env files to be used in app. 
 
 **Front End**
 - Axios - For communicating with back end routes

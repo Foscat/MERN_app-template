@@ -1,7 +1,6 @@
 import React from 'react';
 import Flextron from "../FlexTron";
 import TextCard from "../TextCard";
-import { Row, Container } from 'reactstrap';
 import CustomerSignUpForm from './CustomerSignUpForm';
 
 // Basic signup component that holds its specific form inside it
@@ -11,34 +10,24 @@ import CustomerSignUpForm from './CustomerSignUpForm';
 const CustomerSignUp = (props) => {
     
     return(
-        <div className="CustSignUp">
-
-            <Container className="container">
-
-                <Row className="row">
-
-                    <Flextron
-                     style={{backgroundColor: "#fff"}}
-                     title="Join Today!"
-                     subtitle="Become a member of the db!"
-                    >
-                     <p>Fill out form to add to user table</p>
-                    </Flextron>
+        <div className={props.className} >
+                <Flextron
+                    title="Join Today!"
+                    subtitle="Become a member of the db!"
+                >
+                    <p>Fill out form to add to user table</p>
 
                     <TextCard 
-                     title="Sign Up Card"
-                     subtitle="Fill out info and sign up"
-                     style={{backgroundColor: "rgb(193, 152, 154)"}}
+                        title="Sign Up Card"
+                        subtitle="Fill out info and sign up"
+                        style={{backgroundColor:"#fff"}}
                     >
                         <CustomerSignUpForm 
                             handleInputChange={props.handleInputChange}
                             handleFormSubmit={props.handleFormSubmit}
                         />
                     </TextCard>
-
-                </Row>
-
-            </Container>
+                </Flextron>
 
         </div>
     )

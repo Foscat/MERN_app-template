@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
-        UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import './style.css';
+import {NavLink} from "reactstrap";
 
 class NavBar extends Component  {
     constructor(props){
@@ -18,60 +16,53 @@ class NavBar extends Component  {
 
     render() {
         return (
-            <div>
-                <Navbar style={{backgroundColor: "rgb(68, 8, 8)"}} expand="md">
+            <div style={styles.margin}>
 
-                    <NavbarBrand href="/">MERN App Template</NavbarBrand>
+                <nav style={styles.body} className="navbar navbar-expand-lg fixed-top navbar-light">
+                    <strong>
+                        {/* // eslint-disable-next-line */}
+                        <a className="navbar-brand" href="/" style={styles.brand}>
+                            MERN App Template
+                        </a>
+                    </strong>
+                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul className="navbar-nav">
+                            <li className="nav-item">
+                                <NavLink style={styles.link} href="/" >Home</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink style={styles.link} href="/workbench">Workbench</NavLink>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
 
-                    <NavbarToggler onClick={this.toggleNavbar} />
-
-                    <Collapse isOpen={this.state.navbarOpen} navbar>
-
-                        <Nav className="ml-auto" navbar>
-
-                            <NavItem>
-                                <NavLink href="/">Home</NavLink>
-                            </NavItem>
-
-                            <NavItem>
-                                <NavLink href="/workbench">Workbench</NavLink>
-                            </NavItem>
-
-                            <UncontrolledDropdown nav inNavbar>
-
-                                <DropdownToggle nav caret>
-                                    Options
-                                </DropdownToggle>
-
-                                <DropdownMenu right>
-
-                                    <DropdownItem>
-                                        Option 1
-                                    </DropdownItem>
-
-                                    <DropdownItem>
-                                        Option 2
-                                    </DropdownItem>
-
-                                    <DropdownItem divider />
-
-                                    <DropdownItem>
-                                        Reset
-                                    </DropdownItem>
-
-                                </DropdownMenu>
-
-                            </UncontrolledDropdown>
-                            
-                        </Nav>
-
-                    </Collapse>
-
-                </Navbar>
             </div>
         );
     }
 
+}
+
+const styles = {
+    body: {
+        backgroundColor: "#d4d7dd"
+    },
+    link: {
+        color: "#0D1521",
+        fontWeight: "bold",
+        fontFamily: "Georgia, serif"
+    },
+    brand: {
+        color: "#0D1521",
+        fontWeight: "bold",
+        fontFamily: "Georgia, serif"
+    },
+    margin: {
+        marginBottom: "3rem"
+    }
 }
 
 export default NavBar
