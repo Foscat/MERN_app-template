@@ -42,5 +42,6 @@ Once dependencies are installed type *npm start* in termial. This will start the
 - React-router-dom - Needed for using a react component router
 - React-scripts - Needed for react to work
 - Reactstrap - Special components made just for react
+- Moment - For easy formatting of dates
 
 See a working delpoyed version here: https://glacial-everglades-91451.herokuapp.com/

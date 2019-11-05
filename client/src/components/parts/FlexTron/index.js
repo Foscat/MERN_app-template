@@ -6,10 +6,12 @@ import { Jumbotron } from "reactstrap";
 const FlexTron = (props) => {
     return (
         <Jumbotron className={props.className} style={props.style}>
-            <h1 className="jumboTitle">{props.title}</h1>
-            <p className="jumboSub">{props.subtitle}</p>
+            <div style={props.titleStyle}>
+                <h1 >{props.title}</h1>
+                <h5>{props.subtitle}</h5>
+            </div>
             <hr />
-            <div className="jumboCon">
+            <div style={props.contentStyle}>
                 {props.children}
             </div>
         </Jumbotron>

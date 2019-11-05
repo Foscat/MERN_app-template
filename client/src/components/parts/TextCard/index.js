@@ -22,7 +22,7 @@ const TextCard = (props) => {
 
             <CardBody>
 
-                <div className="txtCardChildren">
+                <div style={props.contentStyle}>
                     {props.children}
                 </div>
     

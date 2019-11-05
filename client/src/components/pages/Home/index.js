@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Button  } from 'reactstrap';
+import moment from "moment";
 import API from '../../../utils/API';
 import TextCard from '../../parts/TextCard';
 import CustomerSignUp from '../../parts/CustomerSignUp';
@@ -17,11 +18,11 @@ class Home extends Component{
             userPool: [],
 
             // Add user form
-            addCustName1: "",
-            addCustName2: "",
-            addCustEmail: "",
-            addCustPass: "",
-            addCustPhone: 0,
+            addFirstName: "",
+            addLastName: "",
+            addEmail: "",
+            addPassword: "",
+            addPhoneNum: 0,
 
             // Model attrs
             show: false,
@@ -33,16 +34,14 @@ class Home extends Component{
             updateLastName: "",
             updateEmail: "",
             updatePassword: "",
-            updatePhoneNum: ""
-
-
-
+            updatePhoneNum: "",
         }
     }
 
     // When page loads see inital state value
     componentDidMount(){
         console.log("Mount State: " , this.state);
+        this.getUsers();
     }
 
     // Every time state changes this function fires to give you a update all changes and thier values
@@ -64,16 +63,36 @@ class Home extends Component{
         console.log("Add user state: ", this.state);
         const s = this.state;
 
+        if (
+            !s.addFirstName ||
+            !s.addLastName ||
+            !s.addEmail ||
+            !s.addPassword ||
+            !s.addPhoneNum
+        ) {
+        // If failed block submit and show alert
+        this.setState({
+            title: "Error",
+            text: "Please fill out all fields before creating your profile",
+            show: true
+        });
+        return;
+        }
+
         // Sends info of to util api call
         API.addUser({
-            first_name: s.addCustName1,
-            last_name: s.addCustName2,
-            email: s.addCustEmail,
-            password: s.addCustPass,
-            phone_num: s.addCustPhone
+            first_name: s.addFirstName,
+            last_name: s.addLastName,
+            email: s.addEmail,
+            password: s.addPassword,
+            phone_num: s.addPhoneNum,
+            createdAt: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
         })
         .catch(err=>console.error("You hit an error: ",err))
-        .then(() => this.getUsers())
+        .then(res => {
+            console.log("Add user res:", res.data);
+            window.location.reload(false);
+        })
     };
 
     // Grabs all users in db and displays them on the DOM
@@ -81,11 +100,7 @@ class Home extends Component{
         console.log("Get users: ", this.state);
         // When users are pulled from the db the are put into an array. That array when it contains info loops and makes cards for each user
         API.getUsers().then(res => this.setState({ userPool: res.data }))
-        .catch(() => {
-            this.setState({ 
-                userPool: ["Didn't work"]
-            });
-        })
+        .catch(err => console.error(err));
     }
 
     // Function that handles the deleting of a single user from the db
@@ -94,12 +109,14 @@ class Home extends Component{
         console.log("Delete function started");
         alert("You are deleting someting from the db!");
         // Send request to util api call
-        API.deleteUser(id).then(res => this.getUsers()).then(() => this.getUsers())
+        API.deleteUser(id).then(res => {
+            console.log("Delete response:", res);
+            this.getUsers()
+        })
     }
 
     // Sweet alert model that contains form for PUT operations 
     editUserModal = user => {
-
         this.setState({ 
             updateFirstName: user.first_name,
             updateLastName: user.last_name,
@@ -150,7 +167,8 @@ class Home extends Component{
             last_name: s.updateLastName,
             email: s.updateEmail,
             password: s.updatePassword,
-            phone_num: s.updatePhoneNum
+            phone_num: s.updatePhoneNum,
+            updatedAt: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
         })
         // After form submits call function to get all users to see updated info and close model
         .then(() => {
@@ -177,7 +195,7 @@ class Home extends Component{
                     </div>
                 </SweetAlert>
 
-                <Row>
+                <Row className="mx-auto">
 
                     {/* Add user form */}
                     <Col lg="6" className="mx-auto">
@@ -199,7 +217,7 @@ class Home extends Component{
                     
 
                     {/* See all users in db */}
-                    <Col lg="5" className="mx-auto">
+                    <Col lg="6" className="mx-auto">
                         {this.state.userPool.length ? (
                             <div>
                                 {this.state.userPool.map((user) => {
@@ -210,9 +228,9 @@ class Home extends Component{
                                         subtitle={user.last_name}
                                         >
                                             {/* Show other user information as children */}
-                                            <p>Phone number: {user.phone_num}</p>
-                                            <p>Email: {user.email}</p>
-                                            <p>Password: {user.password}</p>
+                                            <span><h6>Phone number:</h6> <p>{user.phone_num}</p></span>
+                                            <span><h6>Email:</h6> <p>{user.email}</p></span>
+                                            <span><h6>Password:</h6> <p>{user.password}</p></span>
                                             {/* Delete this user button */}
                                             <Button color="danger" onClick={() => this.deleteUser(user._id)}>
                                                 Delete

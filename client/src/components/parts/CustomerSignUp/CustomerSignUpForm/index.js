@@ -9,31 +9,31 @@ const CustomerSignUpForm = (props) => {
 
             <FormGroup className="form-group">
                 <Label for="firstName">First Name</Label>
-                <Input type="text" name="addCustName1" onChange={props.handleInputChange}
+                <Input type="text" name="addFirstName" onChange={props.handleInputChange}
                     id="firstName" placeholder="Joe"/>
             </FormGroup>
 
             <FormGroup className="form-group">
                 <Label for="lastName">Last Name</Label>
-                <Input type="text" name="addCustName2" onChange={props.handleInputChange}
+                <Input type="text" name="addLastName" onChange={props.handleInputChange}
                     id="lastName" placeholder="Brown"/>
             </FormGroup>
 
             <FormGroup className="form-group">
                 <Label for="email">Preferred Email</Label>
-                <Input type="email" name="addCustEmail" onChange={props.handleInputChange}
+                <Input type="email" name="addEmail" onChange={props.handleInputChange}
                     id="email" placeholder="joeBrow@aol.com"/>
             </FormGroup>
 
             <FormGroup className="form-group">
                 <Label for="password">Password</Label>
-                <Input type="password" name="addCustPass" onChange={props.handleInputChange}
+                <Input type="password" name="addPassword" onChange={props.handleInputChange}
                     id="password" placeholder="password2019"/>
             </FormGroup>
 
             <FormGroup className="form-group">
                 <Label for="phoneNum">Phone Number</Label>
-                <Input type="tel" name="addCustPhone" onChange={props.handleInputChange}
+                <Input type="tel" name="addPhoneNum" onChange={props.handleInputChange}
                     id="phoneNum" placeholder="0123456789"/>
             </FormGroup>
 

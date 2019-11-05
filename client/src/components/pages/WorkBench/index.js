@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
   // Comment out to prevent warnings when needed they are here for easy access 
-// import { Container, Row, Col, Button  } from 'reactstrap';
+import { Row } from 'reactstrap';
 import TextCard from '../../parts/TextCard';
-// import API from '../../../utils/API';
+import API from '../../../utils/API';
 // import SweetAlert from 'react-bootstrap-sweetalert';
 
 
@@ -38,9 +38,17 @@ class WorkBench extends Component {
     });
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+    console.log("Event.target", event.target);
+    const data = new FormData(event.target);
+    console.log("Data:", data)
+    API.addUser(event.target).then(res=>console.log("form res", res));
+  }
+
   render() {
     return (
-      <div style={styles.box} className="row pt-5">
+      <Row style={styles.box} className="pt-5">
         <TextCard 
           className="mx-auto"
           title="Welcome to your workbench"
@@ -50,7 +58,7 @@ class WorkBench extends Component {
           <input className="form-control" name="input" type="text" onChange={this.handleInputChange}></input>
         </TextCard>
         
-      </div>
+      </Row>
     );
   }
 
