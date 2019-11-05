@@ -6,6 +6,7 @@ import TextCard from '../../parts/TextCard';
 import CustomerSignUp from '../../parts/CustomerSignUp';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import EditUser from '../../parts/Models/EditUser';
+const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 class Home extends Component{
     constructor(props){
@@ -58,11 +59,25 @@ class Home extends Component{
         });
     }
 
+    validateEmailInput = email => {
+        if(!email.match(mailformat)){
+            this.setState({
+                title: "Error",
+                text: "Email not in correct format.",
+                show: true
+            });
+            return false;
+        }
+        else return true;
+    }
+
     // Function that handles adding a customer to the db
     signUpUser = async () => {
         console.log("Add user state: ", this.state);
         const s = this.state;
-
+        // Check that email is in correct format
+        if(this.validateEmailInput(s.addEmail));
+        else return;
         if (
             !s.addFirstName ||
             !s.addLastName ||
@@ -144,7 +159,10 @@ class Home extends Component{
 
     // When the update form on the model is submitted this function fires
     handleUpdateFormSubmit = (id) => {
-        let s = this.state
+        let s = this.state;
+        // Check that email is in correct format
+        if(this.validateEmailInput(s.updateEmail));
+        else return;
         // If one of the form fields has no value block submit
         if (
           !s.updateFirstName ||
@@ -156,7 +174,7 @@ class Home extends Component{
           // If failed block submit and show alert
           this.setState({
             title: "Error",
-            text: "Please fill out all fields before submitting your survey",
+            text: "Please fill out all fields before submitting form.",
             show: true
           });
           return;
