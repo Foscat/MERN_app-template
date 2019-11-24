@@ -2,23 +2,23 @@
 Boilerplate for full MERN stack apps
 
 ## Overview
-Full stack ready for deployment with built in CRUD functions and components.
+Full stack template with alot of comments for help, ready for cloud deployment with built in CRUD functions and components.
 Made so the file structure is easy to follow and replicate to keep order as app increases in size.
-Comes with basic dependencies so developers can choose to add redux or other depencies on top off it. But allows for devs to have more choce on how app is built.
+Comes with basic dependencies so developers can choose to add redux or other depencies on top off it. But allows for devs to have more choice on how the app is built.
 
 **__Site is deployment ready out of the box__**
 
 ## How to use it
-Clone repo as local file refrence then copy files into your project. Then on server.js level open terminal and type *npm install* this will install backend dependencies and then it auto switches to client side and installs dependencies.
+Get the zip file from the releases section and put the contents from it into your main project folder. Then on server.js level open the terminal and type *npm install* this will install backend dependencies it will auto switch to the client side and install it's dependencies.
 
-Once dependencies are installed type *npm start* in termial. This will start the server then swithc to client and boot it. It will open up tab in your default browser.
+Once dependencies are installed type *npm start* in the termial. This will start the server then auto switch to client and boot it. It will open up in a new tab in your default browser.
 
-**Be sure to link DB with mlab or other extension**
+**Be sure to link DB with mlab or other extension for deployment**
 
 ### Easy to build on top of
-* File structure designed to make large scale projects in organized way.
-* index.js files in folders to serve as directory routes for files in folder
-* Built in Crud functions and front end components as working example to copy and re-use
+* File structure designed to handle large scale projects in organized way.
+* index.js files in folders to serve as directory routes for files in folder.
+* Built in CRUD functions and front-end components as working example to copy and re-use
 * Comes with Bootstrap as cdn so it is easy use and replace
 
 ### Dependencies 
@@ -32,7 +32,7 @@ Once dependencies are installed type *npm start* in termial. This will start the
 - Prop-types - Helps react with hanldeing props
 - React - To let app work in a react environment
 - If-env - Has app check for env
-- dotenv - Allows .env files to be used in app. 
+- Dotenv - Allows .env files to be used in app. 
 - Moment - For easy formatting of dates for timestamps
 
 **Front End**
