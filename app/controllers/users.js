@@ -1,4 +1,5 @@
 const db = require("../models");
+const moment = require("moment");
 
 // Defining methods for the userController
 module.exports = {
@@ -23,18 +24,24 @@ module.exports = {
     }
   },
   create: function(req, res) {
+    let userInfo = req.body;
+
+    // Use the backend runtime to handle created at timestamp
+    Object.assign(userInfo, {createdAt: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")})
+
     // Check to see request actually has a body with values
-    if(Object.keys(req.body).length){
+    if(Object.keys(userInfo).length){
+
       //  If the phone number comes in as a type of string convert it into a number before sending to db
-      if(typeof req.body.phone_num === typeof ""){
-        req.body.phone_num = parseInt(req.body.phone_num);
-        db.User.create(req.body)
+      if(typeof userInfo.phone_num === typeof ""){
+        userInfo.phone_num = parseInt(userInfo.phone_num);
+        db.User.create(userInfo)
         .then(dbUser => res.json(dbUser))
         .catch(err => res.status(422).json(err));
       }
       // If all information is correct send data to db
       else{
-        db.User.create(req.body)
+        db.User.create(userInfo)
         .then(dbUser => res.json(dbUser))
         .catch(err => res.status(422).json(err));
       }
@@ -44,7 +51,7 @@ module.exports = {
       res.send({
         message: "There is no data in request body.",
         data: {
-          givenData: req.body
+          givenData: userInfo
         }
       });
     }
@@ -52,7 +59,7 @@ module.exports = {
   update: function(req, res) {
     // If the request does not have an id param or request body return a custom error
     if(!req.params.id || req.body === {}){
-      res.send({
+      res.status(204).send({
         message: "There is missing data in your request",
         data: {
           givenId: req.params.id,
@@ -61,6 +68,9 @@ module.exports = {
       })
     }
     else{
+      // Use the backend runtime to handle updatedAt timestamp
+      Object.assign(req.body, {updatedAt: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")});
+
       db.User.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then(dbUser => (res.json(dbUser)))
       .catch(err => res.status(422).json(err));
@@ -71,7 +81,7 @@ module.exports = {
     if(req.params.id){
       db.User.findById(req.params.id)
       .then(dbUser => dbUser.remove())
-      .catch(err =>  res.send({
+      .catch(err =>  res.status(417).send({
         message: "The id submitted does not match with any in db.", 
         data:{givenId:req.params.id}
       }))
@@ -80,7 +90,7 @@ module.exports = {
     }
     // Otherwise return custom error
     else{
-      res.send({
+      res.status(204).send({
         message: "There is no id present in your request.",
         data: {givenId: req.params.id}
       })

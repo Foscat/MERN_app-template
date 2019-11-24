@@ -9,7 +9,7 @@ const userSchema = new Schema({
     password: { type: String },
     phone_num: { type: Number },
     createdAt: { type: String, required: true },
-    upDatedAt: {type: String }
+    updatedAt: {type: String }
 })
 
 const User = mongoose.model("User", userSchema);

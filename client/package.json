@@ -4,7 +4,6 @@
   "description": "client side of MERN app",
   "dependencies": {
     "axios": ">=0.18.1",
-    "moment": "^2.24.0",
     "react": "^16.6.3",
     "react-bootstrap-sweetalert": "^4.4.1",
     "react-dom": "^16.6.6",

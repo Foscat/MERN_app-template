@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Row, Col, Button  } from 'reactstrap';
-import moment from "moment";
 import API from '../../../utils/API';
 import TextCard from '../../parts/TextCard';
 import CustomerSignUp from '../../parts/CustomerSignUp';
@@ -100,8 +99,7 @@ class Home extends Component{
             last_name: s.addLastName,
             email: s.addEmail,
             password: s.addPassword,
-            phone_num: s.addPhoneNum,
-            createdAt: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
+            phone_num: s.addPhoneNum
         })
         .catch(err=>console.error("You hit an error: ",err))
         .then(res => {
@@ -186,7 +184,6 @@ class Home extends Component{
             email: s.updateEmail,
             password: s.updatePassword,
             phone_num: s.updatePhoneNum,
-            updatedAt: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")
         })
         // After form submits call function to get all users to see updated info and close model
         .then(() => {
@@ -249,6 +246,7 @@ class Home extends Component{
                                             <span><h6>Phone number:</h6> <p>{user.phone_num}</p></span>
                                             <span><h6>Email:</h6> <p>{user.email}</p></span>
                                             <span><h6>Password:</h6> <p>{user.password}</p></span>
+                                            <span><h6>User since:</h6> <p>{user.createdAt}</p></span>
                                             {/* Delete this user button */}
                                             <Button color="danger" onClick={() => this.deleteUser(user._id)}>
                                                 Delete
