@@ -3,7 +3,6 @@ import {  BrowserRouter as Router, Route, Switch  } from 'react-router-dom';
 import Home from "./components/pages/Home"
 import WorkBench from './components/pages/WorkBench';
 import NoMatch from './components/pages/NoMatch';
-
 import NavBar from "./components/parts/NavBar";
 
 // This is the router for react page components

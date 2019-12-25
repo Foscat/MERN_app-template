@@ -27,7 +27,7 @@ module.exports = {
     let userInfo = req.body;
 
     // Use the backend runtime to handle created at timestamp
-    Object.assign(userInfo, {createdAt: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")})
+    Object.assign(userInfo, {createdAt: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")});
 
     // Check to see request actually has a body with values
     if(Object.keys(userInfo).length){

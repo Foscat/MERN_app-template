@@ -8,21 +8,21 @@ const CustomerSignUpForm = (props) => {
         <Form target="/" style={props.style}>
 
             <FormGroup className="form-group">
-                <Label for="firstName">First Name</Label>
-                <Input type="text" name="addFirstName" onChange={props.handleInputChange}
-                    id="firstName" placeholder="Joe"/>
+                <Label for="addName">Name</Label>
+                <Input type="text" name="addName" onChange={props.handleInputChange}
+                    id="addName" placeholder="Joe Buddy"/>
             </FormGroup>
 
             <FormGroup className="form-group">
-                <Label for="lastName">Last Name</Label>
-                <Input type="text" name="addLastName" onChange={props.handleInputChange}
-                    id="lastName" placeholder="Brown"/>
+                <Label for="addUsername">User Name</Label>
+                <Input type="text" name="addUsername" onChange={props.handleInputChange}
+                    id="addUsername" placeholder="JoeIzSooKewl"/>
             </FormGroup>
 
             <FormGroup className="form-group">
                 <Label for="email">Preferred Email</Label>
                 <Input type="email" name="addEmail" onChange={props.handleInputChange}
-                    id="email" placeholder="joeBrow@aol.com"/>
+                    id="email" placeholder="joeBuddy@aol.com"/>
             </FormGroup>
 
             <FormGroup className="form-group">
