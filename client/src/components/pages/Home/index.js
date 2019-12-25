@@ -18,8 +18,8 @@ class Home extends Component{
             userPool: [],
 
             // Add user form
-            addFirstName: "",
-            addLastName: "",
+            addName: "",
+            addUsername: "",
             addEmail: "",
             addPassword: "",
             addPhoneNum: 0,
@@ -30,8 +30,8 @@ class Home extends Component{
             text: null,
 
             // Update user info form
-            updateFirstName: "",
-            updateLastName: "",
+            updateName: "",
+            updateUsername: "",
             updateEmail: "",
             updatePassword: "",
             updatePhoneNum: "",
@@ -78,8 +78,8 @@ class Home extends Component{
         if(this.validateEmailInput(s.addEmail));
         else return;
         if (
-            !s.addFirstName ||
-            !s.addLastName ||
+            !s.addName ||
+            !s.addUsername ||
             !s.addEmail ||
             !s.addPassword ||
             !s.addPhoneNum
@@ -95,8 +95,8 @@ class Home extends Component{
 
         // Sends info of to util api call
         API.addUser({
-            first_name: s.addFirstName,
-            last_name: s.addLastName,
+            name: s.addName,
+            username: s.addUsername,
             email: s.addEmail,
             password: s.addPassword,
             phone_num: s.addPhoneNum
@@ -131,8 +131,8 @@ class Home extends Component{
     // Sweet alert model that contains form for PUT operations 
     editUserModal = user => {
         this.setState({ 
-            updateFirstName: user.first_name,
-            updateLastName: user.last_name,
+            updateName: user.name,
+            updateUserame: user.username,
             updateEmail: user.email,
             updatePassword: user.password,
             updatePhoneNum: user.phone_num
@@ -149,7 +149,7 @@ class Home extends Component{
         )
         // Update state to show model
         this.setState({
-          title: `${user.first_name} ${user.last_name}`,
+          title: `${user.name}`,
           text: text,
           show: true
         })
@@ -163,11 +163,11 @@ class Home extends Component{
         else return;
         // If one of the form fields has no value block submit
         if (
-          !s.updateFirstName ||
-          !s.updateLastName ||
-          !s.updateEmail ||
-          !s.updatePassword ||
-          !s.updatePhoneNum
+            !s.updateName ||
+            !s.updateUsername ||
+            !s.updateEmail ||
+            !s.updatePassword ||
+            !s.updatePhoneNum
         ) {
           // If failed block submit and show alert
           this.setState({
@@ -179,8 +179,8 @@ class Home extends Component{
         }
         // Send field info to db using utils api call
         API.updateUser(id, {
-            first_name: s.updateFirstName,
-            last_name: s.updateLastName,
+            name: s.updateName,
+            username: s.updateUsername,
             email: s.updateEmail,
             password: s.updatePassword,
             phone_num: s.updatePhoneNum,
@@ -239,8 +239,8 @@ class Home extends Component{
                                     return(
                                         <TextCard
                                         key={user._id}
-                                        title={user.first_name}
-                                        subtitle={user.last_name}
+                                        title={user.name}
+                                        subtitle={user.username}
                                         >
                                             {/* Show other user information as children */}
                                             <span><h6>Phone number:</h6> <p>{user.phone_num}</p></span>
@@ -259,8 +259,8 @@ class Home extends Component{
                                     )
                                 })}
                             </div>
-                            // If nothing is in array display empty p tag
-                        ) : (<p></p>)}
+                            // If nothing is in array display null
+                        ) : null}
                     </Col>
 
                 </Row>

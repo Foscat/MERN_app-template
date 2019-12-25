@@ -12,33 +12,33 @@ const EditUser = (props) => {
         >
 
             <FormGroup className="form-group">
-                <Label for="updateFirstName">First Name</Label>
-                <Input type="text" name="updateFirstName" onChange={props.handleInputChange}
-                id="updateFirstName" defaultValue={props.user.first_name} placeholder="Enter first name"/>
+                <Label for="updateName">Name</Label>
+                <Input type="text" name="updateName" onChange={props.handleInputChange}
+                id="updateName" defaultValue={props.user.name} placeholder="Change name"/>
             </FormGroup>
 
             <FormGroup className="form-group">
-                <Label for="updateLastName">Last Name</Label>
-                <Input type="text" name="updateLastName" onChange={props.handleInputChange}
-                id="updateLastName" defaultValue={props.user.last_name} placeholder="Enter last name"/>
+                <Label for="updateUsername">User Name</Label>
+                <Input type="text" name="updateUsername" onChange={props.handleInputChange}
+                id="updateUsername" defaultValue={props.user.username} placeholder="Change username"/>
             </FormGroup>
 
             <FormGroup className="form-group">
                 <Label for="updateEmail">Preferred Email</Label>
                 <Input type="email" name="updateEmail" onChange={props.handleInputChange}
-                id="updateEmail" defaultValue={props.user.email} placeholder="Enter email"/>
+                id="updateEmail" defaultValue={props.user.email} placeholder="Change email"/>
             </FormGroup>
 
             <FormGroup className="form-group">
                 <Label for="updatePassword">Password</Label>
                 <Input type="password" name="updatePassword" onChange={props.handleInputChange}
-                id="updatePassword" defaultValue={props.user.password} placeholder="Enter password"/>
+                id="updatePassword" defaultValue={props.user.password} placeholder="Change password"/>
             </FormGroup>
 
             <FormGroup className="form-group">
                 <Label for="updatePhoneNum">Phone Number</Label>
                 <Input type="number" name="updatePhoneNum" onChange={props.handleInputChange}
-                id="updatePhoneNum" defaultValue={props.user.phone_num} placeholder="Enter phone number"/>
+                id="updatePhoneNum" defaultValue={props.user.phone_num} placeholder="Change phone number"/>
             </FormGroup>
 
             <Button className="btn btn-success" onClick={() => props.handleUpdateFormSubmit(props.user._id) }>Submit</Button>
