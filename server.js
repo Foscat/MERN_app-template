@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === "production") {
 }
 else {
     // Have express use static assets from public folder
-    app.use(express.static(path.join(__dirname, '/client/public')));
+    app.use(express.static(path.join(__dirname, "/client/public")));
     // Have express use routes defined in backend
     app.use(routes);
     // If no backend routes are hit send all requests for the frontend routes
@@ -45,16 +45,8 @@ else {
     });
 }
 
-// Set express headers
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
-
 // Connect to MongoDB
-// To make custom data base just put the name you want for the db where 'mern_template' is.
+// To make custom data base just put the name you want for the db where "mern_template" is.
 mongoose.connect(
     process.env.MONGODB_URI || "mongodb://localhost/mern_template",
     {
@@ -66,4 +58,4 @@ mongoose.connect(
 );
 
 // Use express to start server
-app.listen(PORT, () => console.log("Server listening on: http://localhost:" + PORT));
+app.listen(PORT, () => console.log(`Server listening on: http://localhost:${PORT}`));

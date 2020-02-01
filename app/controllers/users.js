@@ -26,11 +26,11 @@ module.exports = {
   create: function(req, res) {
     let userInfo = req.body;
 
-    // Use the backend runtime to handle created at timestamp
-    Object.assign(userInfo, {createdAt: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")});
-
     // Check to see request actually has a body with values
     if(Object.keys(userInfo).length){
+
+      // Use the backend runtime to handle created at timestamp
+      Object.assign(userInfo, {createdAt: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")});
 
       //  If the phone number comes in as a type of string convert it into a number before sending to db
       if(typeof userInfo.phone_num === typeof ""){

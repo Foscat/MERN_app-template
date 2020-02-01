@@ -4,7 +4,7 @@ import API from '../../../utils/API';
 import TextCard from '../../parts/TextCard';
 import CustomerSignUp from '../../parts/CustomerSignUp';
 import SweetAlert from 'react-bootstrap-sweetalert';
-import EditUser from '../../parts/Models/EditUser';
+import EditUser from '../../parts/modals/EditUser';
 const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 class Home extends Component{
@@ -24,7 +24,7 @@ class Home extends Component{
             addPassword: "",
             addPhoneNum: 0,
 
-            // Model attrs
+            // Modal attributes
             show: false,
             title: "Sweetie",
             text: null,
@@ -73,7 +73,7 @@ class Home extends Component{
     // Function that handles adding a customer to the db
     signUpUser = async () => {
         console.log("Add user state: ", this.state);
-        const s = this.state;
+        let s = this.state;
         // Check that email is in correct format
         if(this.validateEmailInput(s.addEmail));
         else return;
@@ -104,7 +104,7 @@ class Home extends Component{
         .catch(err=>console.error("You hit an error: ",err))
         .then(res => {
             console.log("Add user res:", res.data);
-            window.location.reload(false);
+            window.location.reload(false); // This refeshes the page and clears the form
         })
     };
 

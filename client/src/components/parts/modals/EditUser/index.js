@@ -1,15 +1,9 @@
 import React from 'react';
-import { Button ,FormGroup, Label, Input } from 'reactstrap';
+import { Button ,FormGroup, Label, Input, Form } from 'reactstrap';
 
 const EditUser = (props) => {
     return (
-        <form
-            className={props.className}
-            action="#" //This does not need a action since submit function handles info flow
-            encType="text/plain"
-            method="put"
-            id="edit-form"
-        >
+        <Form>
 
             <FormGroup className="form-group">
                 <Label for="updateName">Name</Label>
@@ -43,7 +37,7 @@ const EditUser = (props) => {
 
             <Button className="btn btn-success" onClick={() => props.handleUpdateFormSubmit(props.user._id) }>Submit</Button>
 
-        </form>
+        </Form>
     )
 };
 

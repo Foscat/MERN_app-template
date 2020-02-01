@@ -2,7 +2,7 @@
 Boilerplate for full MERN stack apps
 
 ## Overview
-Full stack template with alot of comments for help, ready for cloud deployment with built in CRUD functions and components.
+Full stack template with a lot of comments for help, ready for cloud deployment with built in CRUD functions and components.
 Made so the file structure is easy to follow and replicate to keep order as app increases in size.
 Comes with basic dependencies so developers can choose to add redux or other depencies on top off it. But allows for devs to have more choice on how the app is built.
 
