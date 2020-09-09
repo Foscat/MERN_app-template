@@ -1,6 +1,7 @@
 // Dependencies
 const express = require("express");
-const router = require("express").Router();
+// This appears as an unused varible but will break front end and db connection if not here.
+const router = require("express").Router(); // ** DO NOT DELETE **
 const mongoose = require("mongoose");
 const routes = require("./app/routes");
 const app = express();
