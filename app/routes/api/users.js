@@ -1,12 +1,12 @@
 const router = require("express").Router();
 const userController = require("../../controllers/users");
 
-// Matches with "/api/users"
+// Collection routes for listing and creating users.
 router.route("/")
   .get(userController.findAll)
   .post(userController.create);
 
-// Matches with "/api/users/:id"
+// Resource routes for a single user by identifier.
 router
   .route("/:id")
   .get(userController.findById)

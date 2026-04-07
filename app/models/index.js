@@ -1,4 +1,4 @@
 module.exports = {
-    // Serves as directory for schemas
-    User: require("./users")
+  // Central export for all Mongoose models used by controllers.
+  User: require("./users")
 };

@@ -1,99 +1,181 @@
+const { isValidObjectId } = require("mongoose");
 const db = require("../models");
-const moment = require("moment");
 
-// Defining methods for the userController
+const { User } = db;
+
+const buildValidationResponse = (message, data = {}) => ({
+  message,
+  data
+});
+
+const normalizePhoneNumber = (phoneNumber) => {
+  if (phoneNumber === undefined || phoneNumber === null || phoneNumber === "") {
+    return undefined;
+  }
+
+  const parsedNumber = Number(phoneNumber);
+  return Number.isFinite(parsedNumber) ? parsedNumber : phoneNumber;
+};
+
+const getDatabaseErrorPayload = (error) => {
+  if (error?.name === "ValidationError") {
+    return {
+      status: 400,
+      payload: buildValidationResponse("Validation failed.", {
+        errors: error.errors
+      })
+    };
+  }
+
+  if (error?.code === 11000) {
+    return {
+      status: 409,
+      payload: buildValidationResponse("A user with this email already exists.")
+    };
+  }
+
+  return {
+    status: 500,
+    payload: buildValidationResponse("Unexpected server error.")
+  };
+};
+
+const ensureValidObjectId = (id, res) => {
+  if (!isValidObjectId(id)) {
+    res.status(400).json(
+      buildValidationResponse("Invalid user id.", {
+        givenId: id
+      })
+    );
+    return false;
+  }
+
+  return true;
+};
+
 module.exports = {
-  findAll: function(req, res) {
-    db.User.find(req.query)
-      .then(dbUser => res.json(dbUser))
-      .catch(err => res.status(422).json(err));
-  },
-  findById: function(req, res) {
-    // If a request parameter has an id search db 
-    if(req.params.id){
-      db.User.findById(req.params.id)
-      .then(dbUser => res.json(dbUser))
-      .catch(err => res.status(422).json(err));
-    }
-    // If no id present return custom error
-    else{
-      res.send({
-        message: "There is no id present in your request.",
-        data: {givenId: req.params.id}
-      })
+  // Retrieve all users. Query params are passed through for lightweight filtering.
+  async findAll(req, res) {
+    try {
+      const users = await User.find(req.query).sort({ createdAt: -1 });
+      return res.json(users);
+    } catch (error) {
+      const { status, payload } = getDatabaseErrorPayload(error);
+      return res.status(status).json(payload);
     }
   },
-  create: function(req, res) {
-    let userInfo = req.body;
 
-    // Check to see request actually has a body with values
-    if(Object.keys(userInfo).length){
+  async findById(req, res) {
+    const { id } = req.params;
 
-      // Use the backend runtime to handle created at timestamp
-      Object.assign(userInfo, {createdAt: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")});
+    if (!ensureValidObjectId(id, res)) {
+      return undefined;
+    }
 
-      //  If the phone number comes in as a type of string convert it into a number before sending to db
-      if(typeof userInfo.phone_num === typeof ""){
-        userInfo.phone_num = parseInt(userInfo.phone_num);
-        db.User.create(userInfo)
-        .then(dbUser => res.json(dbUser))
-        .catch(err => res.status(422).json(err));
+    try {
+      const user = await User.findById(id);
+
+      if (!user) {
+        return res.status(404).json(
+          buildValidationResponse("User not found.", {
+            givenId: id
+          })
+        );
       }
-      // If all information is correct send data to db
-      else{
-        db.User.create(userInfo)
-        .then(dbUser => res.json(dbUser))
-        .catch(err => res.status(422).json(err));
-      }
-    }
-    // If there is not values in request body send custom error
-    else{
-      res.send({
-        message: "There is no data in request body.",
-        data: {
-          givenData: userInfo
-        }
-      });
+
+      return res.json(user);
+    } catch (error) {
+      const { status, payload } = getDatabaseErrorPayload(error);
+      return res.status(status).json(payload);
     }
   },
-  update: function(req, res) {
-    // If the request does not have an id param or request body return a custom error
-    if(!req.params.id || req.body === {}){
-      res.status(204).send({
-        message: "There is missing data in your request",
-        data: {
-          givenId: req.params.id,
+
+  async create(req, res) {
+    if (!req.body || Object.keys(req.body).length === 0) {
+      return res.status(400).json(
+        buildValidationResponse("Request body is required.", {
           givenData: req.body
-        }
-      })
+        })
+      );
     }
-    else{
-      // Use the backend runtime to handle updatedAt timestamp
-      Object.assign(req.body, {updatedAt: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")});
 
-      db.User.findOneAndUpdate({ _id: req.params.id }, req.body)
-      .then(dbUser => (res.json(dbUser)))
-      .catch(err => res.status(422).json(err));
+    const payload = {
+      ...req.body,
+      phone_num: normalizePhoneNumber(req.body.phone_num)
+    };
+
+    try {
+      const createdUser = await User.create(payload);
+      return res.status(201).json(createdUser);
+    } catch (error) {
+      const { status, payload: errorPayload } = getDatabaseErrorPayload(error);
+      return res.status(status).json(errorPayload);
     }
   },
-  remove: function(req, res) {
-    // If a id is present then run delete
-    if(req.params.id){
-      db.User.findById(req.params.id)
-      .then(dbUser => dbUser.remove())
-      .catch(err =>  res.status(417).send({
-        message: "The id submitted does not match with any in db.", 
-        data:{givenId:req.params.id}
-      }))
-      .then(dbUser => res.json(dbUser))
-      .catch(err => res.status(422).json(err));
+
+  async update(req, res) {
+    const { id } = req.params;
+
+    if (!ensureValidObjectId(id, res)) {
+      return undefined;
     }
-    // Otherwise return custom error
-    else{
-      res.status(204).send({
-        message: "There is no id present in your request.",
-        data: {givenId: req.params.id}
-      })
+
+    if (!req.body || Object.keys(req.body).length === 0) {
+      return res.status(400).json(
+        buildValidationResponse("Update payload is required.", {
+          givenData: req.body
+        })
+      );
+    }
+
+    const payload = {
+      ...req.body,
+      phone_num: normalizePhoneNumber(req.body.phone_num)
+    };
+
+    try {
+      const updatedUser = await User.findByIdAndUpdate(id, payload, {
+        new: true,
+        runValidators: true
+      });
+
+      if (!updatedUser) {
+        return res.status(404).json(
+          buildValidationResponse("User not found.", {
+            givenId: id
+          })
+        );
+      }
+
+      return res.json(updatedUser);
+    } catch (error) {
+      const { status, payload: errorPayload } = getDatabaseErrorPayload(error);
+      return res.status(status).json(errorPayload);
+    }
+  },
+
+  async remove(req, res) {
+    const { id } = req.params;
+
+    if (!ensureValidObjectId(id, res)) {
+      return undefined;
+    }
+
+    try {
+      const deletedUser = await User.findByIdAndDelete(id);
+
+      if (!deletedUser) {
+        return res.status(404).json(
+          buildValidationResponse("User not found.", {
+            givenId: id
+          })
+        );
+      }
+
+      return res.json(deletedUser);
+    } catch (error) {
+      const { status, payload } = getDatabaseErrorPayload(error);
+      return res.status(status).json(payload);
     }
   }
 };
