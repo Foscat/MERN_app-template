@@ -1,3 +1,8 @@
+/**
+ * @file API.js
+ * @description This file contains the API utility functions for performing CRUD operations on the User model. It uses axios to make HTTP requests to the backend API endpoints. The functions include adding a user, getting all users, updating a user, and deleting a user. Each function logs the relevant data for debugging purposes and returns the axios promise for further handling in the components.
+ */
+
 import axios from "axios";
 
 export default {

@@ -5,11 +5,12 @@
   "main": "server.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "dev": "npm run start:dev",
     "start:prod": "node server.js",
-    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
-    "client": "cd client && npm run start",
-    "install": "cd client && npm install",
-    "build": "cd client && npm run build",
+    "start:dev": "concurrently \"nodemon --watch app --watch server.js server.js\" \"npm.cmd --prefix client run dev\"",
+    "client:install": "npm.cmd --prefix client install",
+    "client:dev": "npm.cmd --prefix client run dev",
+    "build": "npm.cmd --prefix client run build",
     "heroku-postbuild": "npm run build"
   },
   "repository": {
@@ -19,18 +20,15 @@
   "author": "Foscat",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^4.1.2",
-    "nodemon": "^1.19.4"
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.10"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "dotenv": "^8.2.0",
-    "express": "^4.16.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
     "if-env": "^1.0.4",
-    "moment": "^2.27.0",
-    "mongoose": "^5.10.3",
-    "prop-types": "^15.7.2",
-    "react": "^16.13.1"
+    "mongoose": "^8.20.1"
   },
   "bugs": {
     "url": "https://github.com/Foscat/MERN_app-template/issues"

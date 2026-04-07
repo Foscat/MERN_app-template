@@ -1,62 +1,60 @@
-// Dependencies
-const express = require("express");
-// This appears as an unused varible but will break front end and db connection if not here.
-const router = require("express").Router(); // ** DO NOT DELETE **
-const mongoose = require("mongoose");
-const routes = require("./app/routes");
-const app = express();
-const path = require("path");
-const PORT = process.env.PORT || 3001;
-const dotenv = require("dotenv");
+/**
+ * @file server.js
+ * @description Main entry point for the Express server, responsible for API routing, static file serving, and database connection.
+ * @author Foscat
+ * @version 1.0.0
+ * @license MIT
+ * @see {@link https://expressjs.com/} for Express documentation
+ * @see {@link https://mongoosejs.com/} for Mongoose documentation
+ */
 
-// Configure dotenv to server to use .env files
+const path = require("path");
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const routes = require("./app/routes");
+
 dotenv.config();
 
-// Use express
-app.use(express.urlencoded({ extended:true }));
+const app = express();
+const PORT = process.env.PORT || 3001;
+const MONGODB_URI =
+  process.env.MONGODB_URI || "mongodb://localhost/mern_template";
+
+// Hardening defaults for modern Mongoose applications.
+mongoose.set("strictQuery", true);
+
+// Middleware stack for request parsing and CORS policy handling.
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Set express headers before creating routes to prevent cors issues
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+// API routes are registered before static handling so API requests always win.
+app.use(routes);
 
-// if else statement stableizes deployment build to see pages and use backend routes.
 if (process.env.NODE_ENV === "production") {
-    // Have express use static assets from build
-    app.use(express.static("client/build"));
-    // Have express use routes defined in backend
-    app.use(routes);
-    // If no backend routes are hit send all requests for the frontend routes
-    app.get("/*", function(req, res) {
-      res.sendFile(path.join(__dirname, "./client/build/index.html"));
-    });
-}
-else {
-    // Have express use static assets from public folder
-    app.use(express.static(path.join(__dirname, "/client/public")));
-    // Have express use routes defined in backend
-    app.use(routes);
-    // If no backend routes are hit send all requests for the frontend routes
-    app.get("/*", function(req, res) {
-      res.sendFile(path.join(__dirname, "./client/public/index.html"));
-    });
+  const clientDistPath = path.join(__dirname, "client", "dist");
+
+  // Serve compiled frontend assets.
+  app.use(express.static(clientDistPath));
+
+  // Single-page app fallback route for client-side routing.
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(clientDistPath, "index.html"));
+  });
 }
 
-// Connect to MongoDB
-// To make custom data base just put the name you want for the db where "mern_template" is.
-mongoose.connect(
-    process.env.MONGODB_URI || "mongodb://localhost/mern_template",
-    {
-        useCreateIndex: true,
-        useNewUrlParser: true,
-        useFindAndModify: false,
-        useUnifiedTopology: true
-    }
-);
+const startServer = async () => {
+  try {
+    await mongoose.connect(MONGODB_URI);
+    app.listen(PORT, () => {
+      console.log(`Server listening on: http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to initialize backend services.", error);
+    process.exit(1);
+  }
+};
 
-// Use express to start server
-app.listen(PORT, () => console.log(`Server listening on: http://localhost:${PORT}`));
+startServer();
